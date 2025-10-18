@@ -95,4 +95,43 @@ public class CalculatorTest {
         // then
         assertThat(result).isEqualTo(123);
     }
+
+    @Test
+    void 커스텀_구분자_사용() {
+        // gien
+        Calculator calculator = new Calculator();
+        String input = "//;\n1;2;3";
+
+        // when
+        int result = calculator.calculate(input);
+
+        // then
+        assertThat(result).isEqualTo(6);
+    }
+
+    @Test
+    void 커스텀_구분자_여러_글자_사용() {
+        // gien
+        Calculator calculator = new Calculator();
+        String input = "//;;;\n1;;;2;;;3";
+
+        // when
+        int result = calculator.calculate(input);
+
+        // then
+        assertThat(result).isEqualTo(6);
+    }
+
+    @Test
+    void 커스텀_구분자_공백_사용() {
+        // gien
+        Calculator calculator = new Calculator();
+        String input = "//;\n1 ;2 ;3";
+
+        // when
+        int result = calculator.calculate(input);
+
+        // then
+        assertThat(result).isEqualTo(6);
+    }
 }
