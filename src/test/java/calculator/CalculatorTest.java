@@ -134,4 +134,20 @@ public class CalculatorTest {
         // then
         assertThat(result).isEqualTo(6);
     }
+
+    @Test
+    void 커스텀_구분자_정규_표현식() {
+        // given
+        Calculator calculator = new Calculator();
+        String input = "//|\n1|2|3";
+        String input2 = "//[]\n1[]2[]3";
+
+        // when
+        int result = calculator.calculate(input);
+        int result2 = calculator.calculate(input2);
+
+        // then
+        assertThat(result).isEqualTo(6);
+        assertThat(result2).isEqualTo(6);
+    }
 }
