@@ -1,6 +1,7 @@
 package calculator;
 
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 public class Calculator {
 
@@ -17,9 +18,12 @@ public class Calculator {
             String inputString = input.substring(newLineIndex + 1);
 
             String customDelimiter = separateDelimiter(input);
-            String[] splitString = inputString.replace(" ", "").split(customDelimiter);
 
-            int result = sum(splitString);
+            // customDelimiter가 정규식과 겹치는 경우에도 정규식으로 인식하지 않게
+            String pattern = Pattern.quote(customDelimiter);
+            String[] patternSplitString = inputString.replace(" ", "").split(pattern);
+
+            int result = sum(patternSplitString);
             return result;
         }
 
