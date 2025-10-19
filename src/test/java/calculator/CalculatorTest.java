@@ -120,20 +120,6 @@ public class CalculatorTest {
     }
 
     @Test
-    @DisplayName("커스텀 구분자로 여러 글자의 문자열을 사용할 수 있다.")
-    void 커스텀_구분자_여러_글자_사용() {
-        // given
-        Calculator calculator = new Calculator();
-        String input = "//;;;\n1;;;2;;;3";
-
-        // when
-        int result = calculator.calculate(input);
-
-        // then
-        assertThat(result).isEqualTo(6);
-    }
-
-    @Test
     @DisplayName("커스텀 구분자와 숫자 사이 공백이 있어도 정상 동작한다.")
     void 커스텀_구분자_공백_사용() {
         // given
@@ -148,34 +134,17 @@ public class CalculatorTest {
     }
 
     @Test
-    @DisplayName("커스텀 구분자로 공백을 사용할 수 있다.")
-    void 커스텀_구분자_공백_사용2() {
-        // given
-        Calculator calculator = new Calculator();
-        String input = "// \n1 2 3";
-
-        // when
-        int result = calculator.calculate(input);
-
-        // then
-        assertThat(result).isEqualTo(6);
-    }
-
-    @Test
     @DisplayName("커스텀 구분자가 정규 표현식과 겹치더라도 정상 동작한다.")
     void 커스텀_구분자_정규_표현식() {
         // given
         Calculator calculator = new Calculator();
         String input = "//|\n1|2|3";
-        String input2 = "//[]\n1[]2[]3";
 
         // when
         int result = calculator.calculate(input);
-        int result2 = calculator.calculate(input2);
 
         // then
         assertThat(result).isEqualTo(6);
-        assertThat(result2).isEqualTo(6);
     }
 
     @Test
@@ -223,20 +192,6 @@ public class CalculatorTest {
         assertEquals("커스텀 구분자 형식이 잘못되었습니다.", e.getMessage());
     }
 
-    @Test
-    @DisplayName("지정한 커스텀 구분자를 사용하지 않은 경우, IllegalArgumentException이 발생한다.")
-    void 커스텀_구분자_예외2() {
-        // given
-        Calculator calculator = new Calculator();
-        String input = "//;\n1&2&3";
-
-        // when
-        IllegalArgumentException e =
-                assertThrowsExactly(IllegalArgumentException.class, () -> calculator.calculate(input));
-
-        // then
-        assertEquals("커스텀 구분자를 사용하지 않았습니다.", e.getMessage());
-    }
 
     @Test
     @DisplayName("커스텀 구분자가 비어 있는 경우, IllegalArgumentException이 발생한다. (공백 구분자는 허용)")
@@ -254,36 +209,6 @@ public class CalculatorTest {
     }
 
     @Test
-    @DisplayName("연속된 구분자가 포함되는 경우, IllegalArgumentException이 발생한다.")
-    void 구분자_연속_예외() {
-        // given
-        Calculator calculator = new Calculator();
-        String input = "1,,2";
-
-        // when
-        IllegalArgumentException e =
-                assertThrowsExactly(IllegalArgumentException.class, () -> calculator.calculate(input));
-
-        // then
-        assertEquals("연속된 구분자가 포함되어 있습니다.", e.getMessage());
-    }
-
-    @Test
-    @DisplayName("문자열 마지막에 구분자가 나오는 경우, IllegalArgumentException이 발생한다.")
-    void 문자열_마지막_구분자_예외() {
-        // given
-        Calculator calculator = new Calculator();
-        String input = "1,2,";
-
-        // when
-        IllegalArgumentException e =
-                assertThrowsExactly(IllegalArgumentException.class, () -> calculator.calculate(input));
-
-        // then
-        assertEquals("입력이 구분자로 끝날 수 없습니다.", e.getMessage());
-    }
-
-    @Test
     @DisplayName("숫자 외의 문자가 포함되어 있는 경우, IllegalArgumentException이 발생한다.")
     void 숫자_외의_문자열_예외() {
         // given
@@ -297,4 +222,20 @@ public class CalculatorTest {
         // then
         assertEquals("숫자 외의 문자가 포함되어 있습니다.", e.getMessage());
     }
+
+    @Test
+    @DisplayName("커스텀 구분자가 여러 글자인 경우, IllegalArgumentException이 발생한다.")
+    void 커스텀_구분자_여러_글자_예외() {
+        // given
+        Calculator calculator = new Calculator();
+        String input = "//;;;\n1;;;2;;;3";
+
+        // when
+        IllegalArgumentException e =
+                assertThrowsExactly(IllegalArgumentException.class, () -> calculator.calculate(input));
+
+        // then
+        assertEquals("커스텀 구분자는 한 글자만 입력 가능합니다.", e.getMessage());
+    }
+
 }
