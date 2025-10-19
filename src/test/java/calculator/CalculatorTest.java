@@ -192,20 +192,23 @@ public class CalculatorTest {
         assertEquals("커스텀 구분자 형식이 잘못되었습니다.", e.getMessage());
     }
 
-
     @Test
-    @DisplayName("커스텀 구분자가 비어 있는 경우, IllegalArgumentException이 발생한다. (공백 구분자는 허용)")
+    @DisplayName("커스텀 구분자가 비어있거나 공백인 경우, IllegalArgumentException이 발생한다.")
     void 커스텀_구분자_예외3() {
         // given
         Calculator calculator = new Calculator();
         String input = "//\n1&2&3";
+        String input2 = "// \n1 2 2";
 
         // when
         IllegalArgumentException e =
                 assertThrowsExactly(IllegalArgumentException.class, () -> calculator.calculate(input));
+        IllegalArgumentException e2 =
+                assertThrowsExactly(IllegalArgumentException.class, () -> calculator.calculate(input2));
 
         // then
         assertEquals("커스텀 구분자가 비어있습니다.", e.getMessage());
+        assertEquals("커스텀 구분자가 비어있습니다.", e2.getMessage());
     }
 
     @Test
