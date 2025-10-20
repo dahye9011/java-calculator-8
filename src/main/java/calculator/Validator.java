@@ -19,12 +19,12 @@ public class Validator {
     }
 
     // 커스텀 구분자 사용 본문 검증
-    public static void validateCustomDelimiter(String numberString, String customDelimiter) {
-        if (numberString.contains(customDelimiter + customDelimiter)) {
+    public static void validateCustomDelimiter(String payload, String customDelimiter) {
+        if (payload.contains(customDelimiter + customDelimiter)) {
             throw new IllegalArgumentException("연속된 구분자가 포함되어 있습니다.");
         }
 
-        if (numberString.endsWith(customDelimiter)) {
+        if (payload.endsWith(customDelimiter)) {
             throw new IllegalArgumentException("입력이 구분자로 끝날 수 없습니다.");
         }
     }
